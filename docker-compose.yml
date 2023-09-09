@@ -2,10 +2,9 @@ version: "3"
 
 services:
   hackathon-api-go:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    container_name: hackathon-api-go
+    build: .
+    restart: always
+    # env_file: .env
     ports:
       - "9999:9999"
-    volumes:
-      - .:/app
