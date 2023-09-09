@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	apiTranslationURL = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=pt"
+	apiTranslationURL = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to="
 	subscriptionKey   = "138aff8d95b748468016c66926bb09c7"
 	location          = "eastus"
 )
@@ -21,7 +21,7 @@ type TranslationResponse struct {
 	} `json:"translations"`
 }
 
-func TranslateText(text string) (string, error) {
+func TranslateText(text string, language string) (string, error) {
 
 	payload := []struct {
 		Text string `json:"Text"`
@@ -34,7 +34,7 @@ func TranslateText(text string) (string, error) {
 		return "", fmt.Errorf("Error marshaling JSON payload: %v", err)
 	}
 
-	req, err := http.NewRequest("POST", apiTranslationURL, bytes.NewReader(payloadBytes))
+	req, err := http.NewRequest("POST", apiTranslationURL+language, bytes.NewReader(payloadBytes))
 	if err != nil {
 		return "", fmt.Errorf("Error creating HTTP request: %v", err)
 	}

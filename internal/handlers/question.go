@@ -30,7 +30,7 @@ func AnswerQuestion(w http.ResponseWriter, r *http.Request) {
 		textToBeTranslated := dto.Payload{Text: string(body)}
 
 		// translate the phrase using our function translateTexts and return the translated phrase
-		translatedPhrase, err := translate.TranslateText(textToBeTranslated.Text)
+		translatedPhrase, err := translate.TranslateText(textToBeTranslated.Text, "pt")
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			json.NewEncoder(w).Encode(dto.ResponseError{Message: "Internal Server Error"})

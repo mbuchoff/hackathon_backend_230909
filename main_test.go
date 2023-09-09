@@ -9,7 +9,7 @@ import (
 func TestTranslateTextFunction(t *testing.T) {
 	textToTranslate := "Hello"
 
-	translatedText, err := translate.TranslateText(textToTranslate)
+	translatedText, err := translate.TranslateText(textToTranslate, "pt")
 
 	if err != nil {
 		t.Errorf("Expected no error, but got %v", err)
