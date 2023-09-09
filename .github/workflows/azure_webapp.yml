@@ -1,6 +1,12 @@
 name: Azure Webapp deploy
 
-on: workflow_dispatch
+on:
+    pull_request:
+      branches:
+        - develop
+    push:
+      branches:
+        - develop
 
 jobs:
   build:
