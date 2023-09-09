@@ -14,11 +14,11 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . -t mycontainer.azurecr.io/myapp:${{ github.sha }}
-        docker push mycontainer.azurecr.io/myapp:${{ github.sha }}
+        docker build . -t mbuchoff/hackathon_230909:${{ github.sha }}
+        docker push mbuchoff/hackathon_230909:${{ github.sha }}
 
     - uses: azure/webapps-deploy@v2
       with:
         app-name: 'myapp'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        images: 'mycontainer.azurecr.io/myapp:${{ github.sha }}'
+        images: 'mbuchoff/hackathon_230909:${{ github.sha }}'
