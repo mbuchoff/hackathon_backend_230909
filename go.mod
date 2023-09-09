@@ -2,7 +2,10 @@ module github.com/mbuchoff/hackathon_backend_230909
 
 go 1.20
 
-require github.com/mmcdole/gofeed v1.2.1
+require (
+	github.com/mmcdole/gofeed v1.2.1
+	github.com/rs/cors v1.10.0
+)
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.0 // indirect

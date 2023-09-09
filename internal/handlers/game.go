@@ -11,11 +11,11 @@ import (
 )
 
 func GameHandler(w http.ResponseWriter, r *http.Request) {
-	// receive in the body the number of questions and the language of the questions
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
 	if r.Method == "POST" {
-		w.Header().Set("Content-Type", "application/json")
-		// allow CORS
-		w.Header().Set("Access-Control-Allow-Origin", "*")
 
 		defer r.Body.Close() // Close the body when we're done
 		body, err := io.ReadAll(r.Body)

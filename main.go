@@ -5,14 +5,29 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/rs/cors"
+
 	"github.com/mbuchoff/hackathon_backend_230909/internal/dto"
 	"github.com/mbuchoff/hackathon_backend_230909/internal/handlers"
 )
 
 func main() {
+
+	mux := http.NewServeMux()
+
+	cors := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+		AllowedMethods: []string{
+			http.MethodPost,
+			http.MethodGet,
+		},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: false,
+	})
+
 	// Start the web server using net/http
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// Set the content type header
 		w.Header().Set("Content-Type", "application/json")
 		w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -22,15 +37,16 @@ func main() {
 	})
 
 	// Post endpoint to receive the phrase to be translated
-	http.HandleFunc("/question", handlers.AnswerQuestion)
+	mux.HandleFunc("/question", handlers.AnswerQuestion)
 
 	// Get endpoint to receive the english sentences
-	http.HandleFunc("/sentences", handlers.GetEnglishSentencesHandler)
+	mux.HandleFunc("/sentences", handlers.GetEnglishSentencesHandler)
 
 	// Post endpoint to receive the number of questions and the language of the questions
-	http.HandleFunc("/game", handlers.GameHandler)
+	mux.HandleFunc("/game", handlers.GameHandler)
+	handler := cors.Handler(mux)
 
 	// Start the web server
 	fmt.Println("API is running on port 9999")
-	http.ListenAndServe(":9999", nil)
+	http.ListenAndServe(":9999", handler)
 }
