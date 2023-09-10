@@ -35,6 +35,7 @@ func main() {
 		// Write the response body
 		json.NewEncoder(w).Encode(dto.Response{Message: "OK"})
 	})
+	handler := cors.Handler(mux)
 
 	// Post endpoint to receive the phrase to be translated
 	mux.HandleFunc("/question", handlers.AnswerQuestion)
@@ -44,7 +45,6 @@ func main() {
 
 	// Post endpoint to receive the number of questions and the language of the questions
 	mux.HandleFunc("/game", handlers.GameHandler)
-	handler := cors.Handler(mux)
 
 	// Start the web server
 	fmt.Println("API is running on port 9999")
