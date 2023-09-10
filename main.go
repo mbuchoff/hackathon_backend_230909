@@ -24,7 +24,6 @@ func main() {
 		AllowedHeaders:   []string{"*"},
 		AllowCredentials: false,
 	})
-	handler := cors.Handler(mux)
 
 	// Start the web server using net/http
 
@@ -36,6 +35,7 @@ func main() {
 		// Write the response body
 		json.NewEncoder(w).Encode(dto.Response{Message: "OK"})
 	})
+	handler := cors.Handler(mux)
 
 	// Post endpoint to receive the phrase to be translated
 	mux.HandleFunc("/question", handlers.AnswerQuestion)
