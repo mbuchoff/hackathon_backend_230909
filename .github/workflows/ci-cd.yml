@@ -24,12 +24,19 @@ jobs:
     needs: [build-test]
     runs-on: ubuntu-latest
     steps:
-    - name: Deploying Application on EC2
-      uses: appleboy/ssh-action@master
+    - name: Checkout Code
+      uses: actions/checkout@v3
       with:
-        host: ${{ secrets.SSH_EC2_IP }}
-        username: ${{ secrets.SSH_EC2_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        # passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        script: |
-          ./docker-ec2-deploy.sh
+        ref: develop
+    - name: Deploying Application with rsync over SSH to EC2
+      uses: easingthemes/ssh-deploy@main
+      with:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        REMOTE_HOST: ${{ secrets.SSH_EC2_IP }}
+        REMOTE_USER: ${{ secrets.SSH_EC2_USER }}
+        SOURCE: .
+        TARGET: ${{ github.event.repository.name }}
+        SCRIPT_AFTER: |
+          cd ~
+          cd ${{ github.event.repository.name }}
+          source ./docker-ec2-deploy.sh
