@@ -24,6 +24,7 @@ func main() {
 		AllowedHeaders:   []string{"*"},
 		AllowCredentials: false,
 	})
+	handler := cors.Handler(mux)
 
 	// Start the web server using net/http
 
@@ -44,7 +45,6 @@ func main() {
 
 	// Post endpoint to receive the number of questions and the language of the questions
 	mux.HandleFunc("/game", handlers.GameHandler)
-	handler := cors.Handler(mux)
 
 	// Start the web server
 	fmt.Println("API is running on port 9999")
