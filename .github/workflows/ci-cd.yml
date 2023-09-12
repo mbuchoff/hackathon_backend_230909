@@ -37,5 +37,6 @@ jobs:
         SOURCE: .
         TARGET: ${{ github.event.repository.name }}
         SCRIPT_AFTER: |
+          cd ~
           cd ${{ github.event.repository.name }}
-          source ./docker-ec2-deploy.sh
+          docker compose up -d --build
